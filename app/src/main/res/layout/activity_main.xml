@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.example.yangjun6.myapplication.MyTestView
+        android:id="@+id/step_view"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:outerColor="@color/colorPrimary"
+        app:innerColor="@color/colorAccent"
+        app:borderWidth="20dp"
+        app:stepTextSize="30sp"
+        app:stepTextColor="@color/colorAccent">
+    </com.example.yangjun6.myapplication.MyTestView>
+
+</RelativeLayout>

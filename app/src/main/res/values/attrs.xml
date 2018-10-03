@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="textSize" format="dimension"></attr>
+    <declare-styleable name="myView">
+        <attr name="innerColor" format="color"></attr>
+        <attr name="outerColor" format="color"></attr>
+        <attr name="borderWidth" format="dimension"></attr>
+        <attr name="stepTextSize" format="dimension"></attr>
+        <attr name="stepTextColor" format="color"></attr>
+    </declare-styleable>
+</resources>
