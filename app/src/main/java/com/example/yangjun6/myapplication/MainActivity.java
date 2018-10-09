@@ -6,31 +6,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LetterSlideBarView.TouchListener {
     private MyTestView mStepViem;
     private ValueAnimator valueAnimator;
+    private TextView mLetterTv;
+    private LetterSlideBarView mLetterSlideBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mStepViem = findViewById(R.id.step_view);
-        mStepViem.setmStepMax(4000);
-        valueAnimator = ObjectAnimator.ofFloat(0,2000);
-        valueAnimator.setDuration(2000);
-        valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float current = (float)valueAnimator.getAnimatedValue();
-                mStepViem.setmStepCurrent((int)current);
-            }
-        });
-        valueAnimator.start();
+        mLetterTv = findViewById(R.id.letter_tv);
+        mLetterSlideBar = findViewById(R.id.letter_view);
+        mLetterSlideBar.setTouchListener(this);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void touch(String letter,boolean isTouch) {
+        if(isTouch){
+            mLetterTv.setText(letter);
+            mLetterTv.setVisibility(View.VISIBLE);
+        }else {
+            mLetterTv.setVisibility(View.GONE);
+        }
+
     }
 }

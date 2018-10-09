@@ -6,15 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.yangjun6.myapplication.MyTestView
-        android:id="@+id/step_view"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:outerColor="@color/colorPrimary"
-        app:innerColor="@color/colorAccent"
-        app:borderWidth="20dp"
-        app:stepTextSize="30sp"
-        app:stepTextColor="@color/colorAccent">
-    </com.example.yangjun6.myapplication.MyTestView>
+   <com.example.yangjun6.myapplication.LetterSlideBarView
+       android:id="@+id/letter_view"
+       android:layout_width="wrap_content"
+       android:layout_height="match_parent"
+       android:paddingLeft="10dp"
+       android:paddingRight="20dp"/>
+   <TextView
+       android:id="@+id/letter_tv"
+       android:layout_centerInParent="true"
+       android:textSize="20dp"
+       android:visibility="gone"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
