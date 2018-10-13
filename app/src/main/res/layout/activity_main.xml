@@ -6,12 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-   <com.example.yangjun6.myapplication.LetterSlideBarView
-       android:id="@+id/letter_view"
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:paddingLeft="10dp"
-       android:paddingRight="20dp"/>
+   <com.example.yangjun6.myapplication.LockPatternView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" />
    <TextView
        android:id="@+id/letter_tv"
        android:layout_centerInParent="true"

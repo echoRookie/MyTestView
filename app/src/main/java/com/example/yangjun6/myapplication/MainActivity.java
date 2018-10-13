@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements LetterSlideBarView.TouchListener {
+public class MainActivity extends AppCompatActivity {
     private MyTestView mStepViem;
     private ValueAnimator valueAnimator;
     private TextView mLetterTv;
@@ -17,9 +17,7 @@ public class MainActivity extends AppCompatActivity implements LetterSlideBarVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLetterTv = findViewById(R.id.letter_tv);
-        mLetterSlideBar = findViewById(R.id.letter_view);
-        mLetterSlideBar.setTouchListener(this);
+
 
     }
 
@@ -28,14 +26,6 @@ public class MainActivity extends AppCompatActivity implements LetterSlideBarVie
         super.onDestroy();
     }
 
-    @Override
-    public void touch(String letter,boolean isTouch) {
-        if(isTouch){
-            mLetterTv.setText(letter);
-            mLetterTv.setVisibility(View.VISIBLE);
-        }else {
-            mLetterTv.setVisibility(View.GONE);
-        }
 
-    }
+
 }

@@ -13,7 +13,7 @@ public class LockPatternView extends View {
     private Paint mNormalPaint;
     private Paint mLinePaint;
     private Paint mErrorPaint;
-    private Object[][] mPoint;
+    private Object[][] mPoint ;
     public LockPatternView(Context context) {
         this(context,null);
     }
@@ -31,7 +31,30 @@ public class LockPatternView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // 画九个点
-
+        // 初始化点
+        int width = this.getWidth();
+        int pointWidth = width / 3;
+        int offsetX = pointWidth / 2;
+        int offsetY = this.getHeight() / 2;
+        mPoint = new Object[3][3];
+        mPoint[0][0] = new Point(offsetX,offsetY - pointWidth,1);
+        mPoint[0][1] = new Point(offsetX*3,offsetY - pointWidth,2);
+        mPoint[0][2] = new Point(offsetX*5,offsetY - pointWidth,3);
+        mPoint[1][0] = new Point(offsetX,offsetY,4);
+        mPoint[1][1] = new Point(offsetX *3,offsetY,5);
+        mPoint[1][2] = new Point(offsetX*5,offsetY,6);
+        mPoint[2][0] = new Point(offsetX,offsetY + pointWidth,7);
+        mPoint[2][1] = new Point(offsetX*3,offsetY + pointWidth,8);
+        mPoint[2][2] = new Point(offsetX*5,offsetY + pointWidth,9);
+        int i;
+        int j;
+        for (i = 0;i < mPoint.length; i++){
+            for(j = 0;j < mPoint[i].length;j++){
+                Point point = (Point) mPoint[i][j];
+                canvas.drawCircle(point.centerX,point.centerY,15,mNormalPaint);
+                canvas.drawCircle(point.centerX,point.centerY,80,mNormalPaint);
+            }
+        }
     }
     /*
      初始化
@@ -53,16 +76,7 @@ public class LockPatternView extends View {
         mErrorPaint.setColor(Color.RED);
         mErrorPaint.setStyle(Paint.Style.STROKE);
         mErrorPaint.setStrokeWidth(10);
-        // 初始化点
-        mPoint[0][0] = new Point(0,0,1);
-        mPoint[0][1] = new Point(0,0,2);
-        mPoint[0][2] = new Point(0,0,3);
-        mPoint[1][0] = new Point(0,0,4);
-        mPoint[1][1] = new Point(0,0,5);
-        mPoint[1][2] = new Point(0,0,6);
-        mPoint[2][0] = new Point(0,0,7);
-        mPoint[2][1] = new Point(0,0,8);
-        mPoint[3][2] = new Point(0,0,9);
+
 
     }
 }
@@ -71,9 +85,9 @@ class Point{
     private int STATUS_PRESSED = 1;
     private int STATUS_ERROR = 2;
     private int status = STATUS_NORMAL;
-    private int centerX;
-    private int centerY;
-    private int index;
+    public int centerX;
+    public int centerY;
+    public int index;
     public Point(int centerX,int centerY,int index){
         this.centerX = centerX;
         this.centerY = centerY;
