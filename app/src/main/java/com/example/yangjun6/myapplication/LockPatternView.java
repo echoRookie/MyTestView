@@ -7,13 +7,20 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LockPatternView extends View {
     private Paint mNormalPaint;
     private Paint mLinePaint;
     private Paint mErrorPaint;
     private Object[][] mPoint ;
+    private float moveX = 0f;
+    private float moveY = 0f;
+    private List<Point> selectPoint = new ArrayList<>();
     public LockPatternView(Context context) {
         this(context,null);
     }
@@ -55,10 +62,59 @@ public class LockPatternView extends View {
                 canvas.drawCircle(point.centerX,point.centerY,80,mNormalPaint);
             }
         }
+        for(i = 0;i<selectPoint.size();i++){
+            canvas.drawCircle(selectPoint.get(i).centerX,selectPoint.get(i).centerY,80,mLinePaint);
+            canvas.drawCircle(selectPoint.get(i).centerX,selectPoint.get(i).centerY,15,mLinePaint);
+            if(i>0){
+                canvas.drawLine(selectPoint.get(i-1).centerX,selectPoint.get(i-1).centerY,selectPoint.get(i).centerX,selectPoint.get(i).centerY,mLinePaint);
+            }
+
+        }
+
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        moveX = event.getX();
+        moveY = event.getY();
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN :
+                int i,j;
+                for(i = 0;i<mPoint.length;i++) {
+                    for (j = 0; j < mPoint[i].length; j++) {
+                        Point temp = (Point) mPoint[i][j];
+                        if (Math.sqrt((temp.centerX - moveX) * (temp.centerX - moveX) + (temp.centerY - moveY) * (temp.centerY - moveY)) < 80) {
+                            selectPoint.add(temp);
+                            invalidate();
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            case MotionEvent.ACTION_MOVE :
+                for(i = 0;i<mPoint.length;i++) {
+                    for (j = 0; j < mPoint[i].length; j++) {
+                        Point temp = (Point) mPoint[i][j];
+                        if (Math.sqrt((temp.centerX - moveX) * (temp.centerX - moveX) + (temp.centerY - moveY) * (temp.centerY - moveY)) < 80) {
+                            selectPoint.add(temp);
+                            invalidate();
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            case MotionEvent.ACTION_UP:
+                selectPoint.clear();
+                break;
+        }
+        return true;
+    }
+
     /*
-     初始化
-     */
+         初始化:
+         */
     private void init(){
         // 初始化画笔
         mNormalPaint = new Paint();
@@ -79,6 +135,25 @@ public class LockPatternView extends View {
 
 
     }
+
+    // 判断触摸的点是否在圆内
+//    public Point checkInPoints(float x,float y,float radius){
+//        int i,j;
+//        Point temp = null;
+//        for(i = 0;i<mPoint.length;i++) {
+//            for (j = 0; j < mPoint[i].length; j++) {
+//                temp = (Point) mPoint[i][j];
+//                if (Math.sqrt((temp.centerX - x) * (temp.centerY - x) + (temp.centerY - y) * (temp.centerY - y)) < radius) {
+//                    return  temp;
+//                    break;
+//                }else {
+//                    temp = null;
+//                    return  temp;
+//                }
+//            }
+//        }
+//
+//    }
 }
 class Point{
     private int STATUS_NORMAL = 0;
