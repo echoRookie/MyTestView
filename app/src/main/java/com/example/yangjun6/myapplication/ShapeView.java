@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -35,6 +36,11 @@ public class ShapeView extends View {
         if(mDragPoint != null){
             canvas.drawCircle(mDragPoint.x,mDragPoint.y,20,mPaint1);
         }
+        if(mFixationPoint != null && mDragPoint != null){
+            Path path = getBezierPath();
+            canvas.drawPath(path,mPaint1);
+        }
+
 
 
         super.onDraw(canvas);
@@ -70,5 +76,33 @@ public class ShapeView extends View {
     private void changePoint(float x,float y){
         mDragPoint.x = x;
         mDragPoint.y = y;
+    }
+    private Path getBezierPath(){
+        Path path = new Path();
+        float dx = mDragPoint.x - mFixationPoint.x;
+        float dy = mDragPoint.y - mFixationPoint.y;
+        if(dx == 0){
+            dx = 0.00001f;
+        }
+        float tanA = dy/dx;
+        float arcTanA = (float)Math.atan(tanA);
+        float p1X = (float) (mFixationPoint.x + Math.sin(arcTanA) * 5);
+        float p1Y = (float)(mFixationPoint.y - Math.cos(arcTanA) * 5);
+        float p2X = (float) (mDragPoint.x + Math.sin(arcTanA) * 20);
+        float p2Y = (float)(mDragPoint.y - Math.cos(arcTanA) * 20);
+        float p3X = (float) (mDragPoint.x - Math.sin(arcTanA) * 20);
+        float p3Y = (float)(mDragPoint.y + Math.cos(arcTanA) * 20);
+        float p4X = (float) (mFixationPoint.x - Math.sin(arcTanA) * 5);
+        float p4Y = (float)(mFixationPoint.y + Math.cos(arcTanA) * 5);
+        PointF centerPoint = new PointF();
+        centerPoint.x = (mDragPoint.x + mFixationPoint.x)/2;
+        centerPoint.y = (mDragPoint.y + mFixationPoint.y)/2;
+        path.moveTo(p1X,p1Y);
+        path.quadTo(centerPoint.x,centerPoint.y,p2X,p2Y);
+        path.lineTo(p3X,p3Y);
+        path.quadTo(centerPoint.x,centerPoint.y,p4X,p4Y);
+        path.close();
+        return  path;
+
     }
 }
