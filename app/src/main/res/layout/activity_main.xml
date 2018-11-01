@@ -6,9 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-   <com.example.yangjun6.myapplication.ShapeView
+   <com.example.yangjun6.myapplication.LoverView
+       android:id="@+id/loveView"
        android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+       android:layout_height="match_parent" >
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="测试"
+          android:onClick="addView"/>
+   </com.example.yangjun6.myapplication.LoverView>
 
 
 </RelativeLayout>
